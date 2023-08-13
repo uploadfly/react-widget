@@ -12,7 +12,7 @@ const Button: FC<IButton> = ({ children, color, bgColor, ...props }) => {
       style={ButtonStyle}
       {...props}
     >
-      {children}
+      {children} loading
     </button>
   );
 };
