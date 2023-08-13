@@ -11,8 +11,8 @@ export interface IButton extends HTMLAttributes<HTMLButtonElement> {
 
   //modal interface 
   export interface IModal {
-    isOpen: boolean;
-    isClose: boolean;
-    onOpen: boolean;
-    children: ReactNode
+    isOpen?: boolean;
+    onClose?: boolean;
+    onOpen?: boolean;
+    children?: ReactNode
   }

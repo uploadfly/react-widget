@@ -1,7 +1,7 @@
-import IndexPage from "./components/template";
+import FlyUpload from "./components/template";
 
 function App() {
-  return <IndexPage />;
+  return <FlyUpload>hello</FlyUpload>;
 }
 
 export default App;
