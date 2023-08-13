@@ -26,7 +26,6 @@ const FlyUpload: FC<IFly> = ({ children }) => {
     }
   }, [acceptedFiles]);
 
-  // Function to handle file upload
   const postFile = async () => {
     if (selectedFile) {
       setLoading(true);
@@ -74,8 +73,6 @@ const FlyUpload: FC<IFly> = ({ children }) => {
           <div className="py-3">
             {!message ? (
               <div className="flex cursor-pointer   h-[30vh] items-center gap-3 flex-col justify-center my-5">
-                {/* Dropzone area */}
-
                 {message || (
                   <div {...getRootProps({ className: "dropzone " })}>
                     <input {...getInputProps()} />
@@ -103,9 +100,6 @@ const FlyUpload: FC<IFly> = ({ children }) => {
                             <FcFile />
                           </div>
                           <div>
-                            {/* eslint-disable-next-line */}
-                            {/* @typescript-eslint/ban-ts-comment */}
-                            {/* @ts-ignore */}
                             <p className="font-bold">{selectedFile?.name}</p>
                             <small>{selectedFile?.size} bytes</small>
                           </div>
