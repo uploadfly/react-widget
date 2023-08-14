@@ -2,21 +2,25 @@ import { FC, ReactNode, useEffect, useState } from "react";
 import Button from "../atom/button/Button";
 import { useDropzone } from "react-dropzone";
 import { FcImageFile } from "react-icons/fc";
-import { AUTHENTICATE, BASE_URL } from "../../constant";
+import { BASE_URL } from "../../constant";
 import { PiSealCheckFill } from "react-icons/pi";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { FcFile } from "react-icons/fc";
 import UfModal from "../organism/modal/modal";
+import axios from "axios";
+import ErrorToast from "../molecule/notifications/errorToast";
 
 interface IFly {
   children: ReactNode;
+  apiKey: string;
 }
 
-const FlyUpload: FC<IFly> = ({ children }) => {
+const FlyUpload: FC<IFly> = ({ children, apiKey }) => {
   const { acceptedFiles, getInputProps, getRootProps } = useDropzone();
   const [loading, setLoading] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
   const [message, setMessage] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
 
   useEffect(() => {
     if (acceptedFiles.length > 0) {
@@ -29,15 +33,13 @@ const FlyUpload: FC<IFly> = ({ children }) => {
   const postFile = async () => {
     if (selectedFile) {
       setLoading(true);
-
+      console.log(apiKey);
       const formdata = new FormData();
       formdata.append("file", selectedFile);
       try {
-        const response = await fetch(`${BASE_URL}/upload`, {
-          method: "POST",
-          body: formdata,
+        const response = await axios.post(`${BASE_URL}/upload`, formdata, {
           headers: {
-            Authorization: AUTHENTICATE,
+            Authorization: `Bearer ${apiKey}`,
           },
         });
 
@@ -45,7 +47,8 @@ const FlyUpload: FC<IFly> = ({ children }) => {
           return setMessage(true);
         }
       } catch (error) {
-        console.error(error);
+        const msg = error?.response?.data?.error;
+        setError(msg);
       } finally {
         setLoading(false);
       }
@@ -65,11 +68,18 @@ const FlyUpload: FC<IFly> = ({ children }) => {
   );
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  //hide error messga after 3 seconds
+  useEffect(() => {
+    setTimeout(() => {
+      error ? setError("") : "";
+    }, 4000);
+  }, [error]);
 
   return (
     <div className="my-4">
       <center>
         <UfModal isOpen={isOpen}>
+          {!error || <ErrorToast message={error} />}
           <div className="py-3">
             {!message ? (
               <div className="flex cursor-pointer   h-[30vh] items-center gap-3 flex-col justify-center my-5">
@@ -81,7 +91,7 @@ const FlyUpload: FC<IFly> = ({ children }) => {
                         <FcImageFile size={"4em"} />
                       </center>
                       <p className="my-2 text-gray-500">
-                        Click to upload or Drag and Drop file{" "}
+                        Click to upload or Drag and Drop file
                       </p>
                     </div>
                   </div>
@@ -94,7 +104,7 @@ const FlyUpload: FC<IFly> = ({ children }) => {
                         width: "100% !important",
                       }}
                     >
-                      <div className="border flex justify-between  py-4 px-4 rounded-md">
+                      <div className="flex justify-between px-4 py-4 border rounded-md">
                         <div className="flex items-center gap-3">
                           <div>
                             <FcFile />
@@ -116,7 +126,7 @@ const FlyUpload: FC<IFly> = ({ children }) => {
                           className="w-[100%] my-2 rounded-md"
                         ></progress>
                       )}
-                      <div className="my-4 flex justify-center">
+                      <div className="flex justify-center my-4">
                         <Button onClick={postFile}>
                           {loading ? "Uploading file..." : "Upload File"}
                         </Button>

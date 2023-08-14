@@ -11,7 +11,7 @@ const UfModal: FC<IModal> = ({ children, isOpen }) => {
 
   const modalContent = (
     <div className="fixed top-0 bottom-0 left-0 right-0 align bg-transBlack">
-      <div className="my-[2em] h-[400px] relative z-50 w-[90%] sm:w-[500px] py-5 px-5 rounded-lg bg-white mx-auto">
+      <div className="my-[2em]  relative z-50 w-[90%] sm:w-[500px] py-5 px-5 rounded-lg bg-white mx-auto">
         <h1
           className="font-medium text-[1.5em] flex justify-end cursor-pointer"
           onClick={closeModal}
