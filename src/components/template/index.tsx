@@ -27,13 +27,14 @@ const FlyUpload: FC<IFly> = ({ children, apiKey }) => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       //@ts-ignore
       setSelectedFile(acceptedFiles[0]);
+      const reader = new FileReader(acceptedFiles);
     }
   }, [acceptedFiles]);
 
   const postFile = async () => {
     if (selectedFile) {
       setLoading(true);
-      console.log(apiKey);
+
       const formdata = new FormData();
       formdata.append("file", selectedFile);
       try {
@@ -47,6 +48,8 @@ const FlyUpload: FC<IFly> = ({ children, apiKey }) => {
           return setMessage(true);
         }
       } catch (error) {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        //@ts-ignore
         const msg = error?.response?.data?.error;
         setError(msg);
       } finally {
@@ -71,7 +74,7 @@ const FlyUpload: FC<IFly> = ({ children, apiKey }) => {
   //hide error messga after 3 seconds
   useEffect(() => {
     setTimeout(() => {
-      error ? setError("") : "";
+      !error || setError("");
     }, 4000);
   }, [error]);
 
@@ -119,13 +122,13 @@ const FlyUpload: FC<IFly> = ({ children, apiKey }) => {
                         </div>
                       </div>
 
-                      {loading && (
+                      {/* {loading && (
                         <progress
                           value={"10"}
                           max={"100"}
                           className="w-[100%] my-2 rounded-md"
                         ></progress>
-                      )}
+                      )} */}
                       <div className="flex justify-center my-4">
                         <Button onClick={postFile}>
                           {loading ? "Uploading file..." : "Upload File"}
