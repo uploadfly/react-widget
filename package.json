@@ -1,7 +1,9 @@
 {
   "name": "@uploadfly/react-widget",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "module",
+  "main": "./dist/react-widget.js",
+  "types": "./dist/react-widget.js",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
