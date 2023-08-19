@@ -1,22 +1,27 @@
 {
   "name": "@uploadfly/react-widget",
-  "version": "1.0.1",
+  "version": "1.0.4",
   "type": "module",
   "main": "./dist/react-widget.js",
-  "types": "./dist/react-widget.js",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "prepack": "json -f package.json -I -e \"delete this.devDependencies; delete this.dependencies\""
   },
+  "files": [
+    "dist"
+  ],
   "dependencies": {
     "@types/file-size": "^1.0.1",
     "axios": "^1.4.0",
     "file-size": "^1.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-icons": "^4.10.1"
+    "react-icons": "^4.10.1",
+    "vite-plugin-dts": "^3.5.2"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",
@@ -28,6 +33,7 @@
     "eslint": "^8.45.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
+    "json": "^11.0.0",
     "postcss": "^8.4.28",
     "tailwindcss": "^3.3.3",
     "typescript": "^5.0.2",

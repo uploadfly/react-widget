@@ -1,5 +1,15 @@
+@import url(https://fonts.googleapis.com/css?family=Inter:100,200,300,regular,500,600,700,800,900);
+
+body {
+  font-family: "Inter";
+}
+
 :root {
   --accent: #f35815;
+}
+
+button {
+  cursor: pointer;
 }
 
 .uf_widget_container {
@@ -46,6 +56,8 @@
   font-size: 1.5rem;
   line-height: 2rem;
   color: #000;
+  background-color: transparent;
+  border: none;
 }
 .uf_choose_a_file {
   width: 100%;
@@ -59,15 +71,17 @@
   background-color: var(--accent);
   color: #fff;
   font-weight: 600;
-  padding-left: 1.25rem;
-  padding-right: 1.25rem;
-  padding-top: 0.75rem;
-  padding-bottom: 0.75rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
   border-radius: 9999px;
+  border: none;
 }
 
 .uf_choose_a_file_text {
   font-weight: 600;
+  font-size: 0.8rem;
   text-align: center;
   margin-top: 0.5rem;
 }
@@ -83,6 +97,8 @@
   text-decoration: underline;
   font-weight: 600;
   margin-bottom: 1rem;
+  background-color: transparent;
+  border: none;
 }
 
 .uf_file_info {
@@ -151,7 +167,7 @@
 
 .uf_attribution {
   position: absolute;
-  bottom: 0.75rem;
+  bottom: 0.1rem;
   font-size: 0.875rem;
   line-height: 1.25rem;
   color: rgba(156 163 175);
@@ -160,6 +176,8 @@
 
 .uf_attribution > a {
   font-weight: 600;
+  text-decoration: none;
+  color: inherit;
 }
 
 .uf_attribution > a:hover {
