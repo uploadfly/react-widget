@@ -1,0 +1,167 @@
+:root {
+  --accent: #f35815;
+}
+
+.uf_widget_container {
+  position: relative;
+  color: #000;
+}
+
+.uf_widget_modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 50;
+}
+
+.uf_modal_backdrop {
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(16px);
+  top: 0;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.uf_modal_container {
+  width: 500px;
+  height: 400px;
+  background-color: #fff;
+  border-radius: 0.375rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.uf_close_button {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  font-size: 1.5rem;
+  line-height: 2rem;
+  color: #000;
+}
+.uf_choose_a_file {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.uf_choose_a_file_btn {
+  background-color: var(--accent);
+  color: #fff;
+  font-weight: 600;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  border-radius: 9999px;
+}
+
+.uf_choose_a_file_text {
+  font-weight: 600;
+  text-align: center;
+  margin-top: 0.5rem;
+}
+
+.uf_file_selected {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.uf_change_file {
+  text-decoration: underline;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.uf_file_info {
+  width: 90%;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  color: #000;
+}
+
+.uf_file_info p span {
+  font-weight: 600;
+}
+
+.uf_upload_button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 0.25rem solid transparent;
+  transition:
+    color 0.3s ease,
+    border-color 0.3s ease;
+  background-color: var(--accent);
+  color: white;
+  font-weight: 600;
+  padding: 0.5rem 1.75rem;
+  border-radius: 9999px;
+  margin-top: 1.25rem;
+}
+
+.uf_upload_button:hover {
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.uf_upload_button.disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  border-color: transparent;
+}
+
+.uf_upload_button.disabled:hover {
+  border-color: transparent;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.uf_animate_spin {
+  animation: spin 1s linear infinite;
+}
+
+.uf_file_upload_response {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.uf_file_upload_response h2 {
+  font-weight: 600;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+
+.uf_attribution {
+  position: absolute;
+  bottom: 0.75rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: rgba(156 163 175);
+  left: 0.75rem;
+}
+
+.uf_attribution > a {
+  font-weight: 600;
+}
+
+.uf_attribution > a:hover {
+  text-decoration: underline;
+}
