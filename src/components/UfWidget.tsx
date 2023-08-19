@@ -4,19 +4,17 @@ import filesize from "file-size";
 import axios from "axios";
 import { CgSpinner } from "react-icons/cg";
 import { BsCloudCheckFill, BsFillCloudSlashFill } from "react-icons/bs";
-
+import "./style.css";
 const UfWidget = ({
   children,
-  buttonClasses,
   apiKey,
   hideAttribution,
 }: {
   children: ReactNode;
-  buttonClasses?: string;
   apiKey: string;
   hideAttribution?: boolean;
 }) => {
-  const [isModalOpen, setIsModalOpen] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const inputRef: { current: any } = useRef(null);
   const [file, setFile] = useState<any>(null);
   const [uploading, setUploading] = useState(false);
@@ -50,31 +48,28 @@ const UfWidget = ({
     setIsUploadSuccessful(false);
   };
   return (
-    <>
-      <div onClick={() => setIsModalOpen(true)} className="absolute">
-        {children}
-      </div>
-      <div
-        className={`relative w-full h-screen z-50 ${
-          !isModalOpen ? "pointer-events-none" : ""
-        }`}
-      >
-        {isModalOpen && (
-          <div
-            className="w-full bg-black/20 backdrop-blur-lg top-0 absolute h-screen flex items-center justify-center"
-            onClick={handleClose}
-          >
+    <div className="uf_widget_container">
+      <div onClick={() => setIsModalOpen(true)}>{children}</div>
+      {isModalOpen && (
+        <div
+          className="uf_widget_modal"
+          style={{
+            pointerEvents: isModalOpen ? "auto" : "none",
+          }}
+        >
+          <div className="uf_modal_backdrop rounded-md" onClick={handleClose}>
             <div
-              className="w-[500px] h-[400px] bg-white rounded-lg relative flex items-center justify-center"
+              className="uf_modal_container"
               onClick={(e) => e.stopPropagation()}
             >
-              <button
-                onClick={handleClose}
-                className="absolute top-3 right-3 text-2xl"
-              >
+              <button onClick={handleClose} className="uf_close_button">
                 <MdClose />
               </button>
-              <div className="w-full">
+              <div
+                style={{
+                  width: "100%",
+                }}
+              >
                 <input
                   type="file"
                   ref={inputRef}
@@ -84,53 +79,53 @@ const UfWidget = ({
                 />
 
                 {!file && !didUploadFail && !isUploadSuccessful && (
-                  <div className="w-full flex items-center justify-center flex-col">
+                  <div className="uf_choose_a_file">
                     <button
-                      className={
-                        buttonClasses
-                          ? buttonClasses
-                          : "bg-accent text-white font-semibold px-5 py-3 rounded-full"
-                      }
+                      className="uf_choose_a_file_btn"
                       onClick={() => inputRef.current.click()}
                     >
                       Choose a file
                     </button>
-                    <p className="text-center mt-2 font-semibold">
-                      ...or drop a file
-                    </p>
+                    <p className="uf_choose_a_file_text">...or drop a file</p>
                   </div>
                 )}
                 {file && !didUploadFail && !isUploadSuccessful && (
-                  <div className="flex flex-col items-center w-full">
+                  <div className="uf_file_selected">
+                    {/* <img
+                      src={URL.createObjectURL(file)}
+                      alt="preview"
+                      className="rounded-md"
+                    /> */}
+
                     {!uploading && (
                       <button
-                        className="underline mb-4 font-semibold"
+                        className="uf_change_file"
                         onClick={() => inputRef.current.click()}
                       >
                         Change file
                       </button>
                     )}
-                    <div className="flex flex-col items-start w-[90%]">
+                    <div className="uf_file_info">
                       <p>
-                        <span className="font-semibold">Name: </span>
+                        <span>Name: </span>
                         {file.name}
                       </p>
                       <p>
-                        <span className="font-semibold">Type: </span>
+                        <span>Type: </span>
                         {file.type}
                       </p>
                       <p>
-                        <span className="font-semibold">Size: </span>
+                        <span>Size: </span>
                         {filesize(file.size).human("si")}
                       </p>
                     </div>
                     <button
-                      className="flex items-center gap-2 border-4 transition-colors border-transparent hover:border-white/50 bg-accent text-white font-semibold px-7 py-2 rounded-full mt-5 disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:border-transparent"
+                      className="uf_upload_button"
                       disabled={uploading}
                       onClick={handleUpload}
                     >
                       {uploading ? (
-                        <CgSpinner className="animate-spin" />
+                        <CgSpinner className="uf_animate_spin" />
                       ) : (
                         <MdUpload />
                       )}
@@ -139,29 +134,36 @@ const UfWidget = ({
                   </div>
                 )}
                 {didUploadFail && (
-                  <div className="flex flex-col items-center gap-2">
-                    <BsFillCloudSlashFill className="text-7xl text-red-600" />
-                    <h2 className="font-semibold text-xl">
-                      File upload failed
-                    </h2>
+                  <div className="uf_file_upload_response">
+                    <BsFillCloudSlashFill
+                      style={{
+                        color: "rgb(220, 38, 38)",
+                        fontSize: "4.5rem",
+                        lineHeight: 1,
+                      }}
+                    />
+                    <h2 className="">File upload failed</h2>
                   </div>
                 )}
                 {isUploadSuccessful && (
-                  <div className="flex flex-col items-center gap-2">
-                    <BsCloudCheckFill className="text-7xl text-green-600" />
-                    <h2 className="font-semibold text-xl">
-                      File upload successful
-                    </h2>
+                  <div className="uf_file_upload_response">
+                    <BsCloudCheckFill
+                      style={{
+                        color: "rgb(22, 163, 74)",
+                        fontSize: "4.5rem",
+                        lineHeight: 1,
+                      }}
+                    />
+                    <h2>File upload successful</h2>
                   </div>
                 )}
               </div>
               {!hideAttribution && (
-                <p className="absolute bottom-3 text-sm text-gray-400 left-3">
+                <p className="uf_attribution">
                   Powered with ♥ by{" "}
                   <a
                     href="https://uploadfly.cloud?utm_source=react_widget"
                     target="_blank"
-                    className="font-semibold hover:underline"
                   >
                     Uploadfly
                   </a>
@@ -169,9 +171,9 @@ const UfWidget = ({
               )}
             </div>
           </div>
-        )}
-      </div>
-    </>
+        </div>
+      )}
+    </div>
   );
 };
 
