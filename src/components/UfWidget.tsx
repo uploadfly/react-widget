@@ -159,7 +159,7 @@ const UfWidget = ({
                 <p className="absolute bottom-3 text-sm text-gray-400 left-3">
                   Powered with ♥ by{" "}
                   <a
-                    href="https://uploadfly.cloud"
+                    href="https://uploadfly.cloud?utm_source=react_widget"
                     target="_blank"
                     className="font-semibold hover:underline"
                   >
