@@ -15,7 +15,17 @@ const UfWidget = ({
   children: ReactNode;
   apiKey: string;
   hideAttribution?: boolean;
-  onUploadComplete?: () => void;
+  onUploadComplete?: (data: {
+    status: number;
+    success: boolean;
+    data: {
+      url: string;
+      name: string;
+      size: number;
+      type: string;
+      path: string;
+    };
+  }) => void;
   accentColor?: string;
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -31,13 +41,17 @@ const UfWidget = ({
 
     try {
       setUploading(true);
-      await axios.post("https://api.uploadfly.cloud/upload", formData, {
-        headers: {
-          Authorization: `Bearer ${apiKey}`,
-        },
-      });
+      const { data } = await axios.post(
+        "https://api.uploadfly.cloud/upload",
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${apiKey}`,
+          },
+        }
+      );
       setIsUploadSuccessful(true);
-      onUploadComplete && onUploadComplete();
+      onUploadComplete && onUploadComplete(data);
     } catch (error) {
       setDidUploadFail(true);
     } finally {
