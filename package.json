@@ -1,6 +1,6 @@
 {
   "name": "@uploadfly/react-widget",
-  "version": "1.1.0",
+  "version": "1.0.4",
   "type": "module",
   "main": "./dist/react-widget.js",
   "types": "./dist/index.d.ts",
@@ -24,7 +24,7 @@
     "vite-plugin-dts": "^3.5.2"
   },
   "devDependencies": {
-    "@types/react": "^18.2.15",
+    "@types/react": "^18.2.20",
     "@types/react-dom": "^18.2.7",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
