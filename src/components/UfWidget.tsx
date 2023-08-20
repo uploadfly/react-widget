@@ -10,11 +10,13 @@ const UfWidget = ({
   apiKey,
   hideAttribution,
   onUploadComplete,
+  accentColor = "#f35815",
 }: {
   children: ReactNode;
   apiKey: string;
   hideAttribution?: boolean;
   onUploadComplete?: () => void;
+  accentColor?: string;
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const inputRef: { current: any } = useRef(null);
@@ -55,6 +57,7 @@ const UfWidget = ({
   return (
     <div
       className="uf_widget_container"
+      style={{ "--accent": accentColor } as any}
       onDragOver={(e) => {
         e.preventDefault();
         setIsDraggingOver(true);
