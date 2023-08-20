@@ -47,8 +47,26 @@ const UfWidget = ({
     setDidUploadFail(false);
     setIsUploadSuccessful(false);
   };
+  const [isDraggingOver, setIsDraggingOver] = useState(false);
+
   return (
-    <div className="uf_widget_container">
+    <div
+      className="uf_widget_container"
+      onDragOver={(e) => {
+        e.preventDefault();
+        setIsDraggingOver(true);
+      }}
+      onDragLeave={(e) => {
+        e.preventDefault();
+        setIsDraggingOver(false);
+      }}
+      onDrop={(e) => {
+        e.preventDefault();
+        setIsDraggingOver(false);
+        const droppedFile = e.dataTransfer.files[0];
+        setFile(droppedFile);
+      }}
+    >
       <div onClick={() => setIsModalOpen(true)}>{children}</div>
       {isModalOpen && (
         <div
@@ -59,7 +77,9 @@ const UfWidget = ({
         >
           <div className="uf_modal_backdrop rounded-md" onClick={handleClose}>
             <div
-              className="uf_modal_container"
+              className={`uf_modal_container ${
+                isDraggingOver ? "drag-over" : ""
+              }`}
               onClick={(e) => e.stopPropagation()}
             >
               <button onClick={handleClose} className="uf_close_button">
