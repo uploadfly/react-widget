@@ -9,10 +9,14 @@ const UfWidget = ({
   children,
   apiKey,
   hideAttribution,
+  onUploadComplete,
+  accentColor = "#f35815",
 }: {
   children: ReactNode;
   apiKey: string;
   hideAttribution?: boolean;
+  onUploadComplete?: () => void;
+  accentColor?: string;
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const inputRef: { current: any } = useRef(null);
@@ -33,6 +37,7 @@ const UfWidget = ({
         },
       });
       setIsUploadSuccessful(true);
+      onUploadComplete && onUploadComplete();
     } catch (error) {
       setDidUploadFail(true);
     } finally {
@@ -47,8 +52,27 @@ const UfWidget = ({
     setDidUploadFail(false);
     setIsUploadSuccessful(false);
   };
+  const [isDraggingOver, setIsDraggingOver] = useState(false);
+
   return (
-    <div className="uf_widget_container">
+    <div
+      className="uf_widget_container"
+      style={{ "--accent": accentColor } as any}
+      onDragOver={(e) => {
+        e.preventDefault();
+        setIsDraggingOver(true);
+      }}
+      onDragLeave={(e) => {
+        e.preventDefault();
+        setIsDraggingOver(false);
+      }}
+      onDrop={(e) => {
+        e.preventDefault();
+        setIsDraggingOver(false);
+        const droppedFile = e.dataTransfer.files[0];
+        setFile(droppedFile);
+      }}
+    >
       <div onClick={() => setIsModalOpen(true)}>{children}</div>
       {isModalOpen && (
         <div
@@ -59,7 +83,9 @@ const UfWidget = ({
         >
           <div className="uf_modal_backdrop rounded-md" onClick={handleClose}>
             <div
-              className="uf_modal_container"
+              className={`uf_modal_container ${
+                isDraggingOver ? "drag-over" : ""
+              }`}
               onClick={(e) => e.stopPropagation()}
             >
               <button onClick={handleClose} className="uf_close_button">
