@@ -9,10 +9,12 @@ const UfWidget = ({
   children,
   apiKey,
   hideAttribution,
+  onUploadComplete,
 }: {
   children: ReactNode;
   apiKey: string;
   hideAttribution?: boolean;
+  onUploadComplete?: () => void;
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const inputRef: { current: any } = useRef(null);
@@ -33,6 +35,7 @@ const UfWidget = ({
         },
       });
       setIsUploadSuccessful(true);
+      onUploadComplete && onUploadComplete();
     } catch (error) {
       setDidUploadFail(true);
     } finally {
