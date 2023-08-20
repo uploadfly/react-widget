@@ -49,6 +49,10 @@ button {
   position: relative;
 }
 
+.uf_modal_container.drag-over {
+  border: 2px dashed var(--accent);
+}
+
 .uf_close_button {
   position: absolute;
   top: 0.75rem;
@@ -124,9 +128,10 @@ button {
   background-color: var(--accent);
   color: white;
   font-weight: 600;
-  padding: 0.5rem 1.75rem;
+  padding: 0.7rem 2.5rem;
   border-radius: 9999px;
   margin-top: 1.25rem;
+  font-size: 15px;
 }
 
 .uf_upload_button:hover {
