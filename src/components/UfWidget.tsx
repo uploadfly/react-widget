@@ -1,33 +1,22 @@
-import { ReactNode, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { MdClose, MdUpload } from "react-icons/md";
 import filesize from "file-size";
 import axios from "axios";
 import { CgSpinner } from "react-icons/cg";
 import { BsCloudCheckFill, BsFillCloudSlashFill } from "react-icons/bs";
 import "./style.css";
+import WidgetProps from "../../types";
+
 const UfWidget = ({
   children,
   apiKey,
+  filename,
+  maxFileSize,
+  allowedFileTypes,
   hideAttribution,
   onUploadComplete,
   accentColor = "#f35815",
-}: {
-  children: ReactNode;
-  apiKey: string;
-  hideAttribution?: boolean;
-  onUploadComplete?: (data: {
-    status: number;
-    success: boolean;
-    data: {
-      url: string;
-      name: string;
-      size: number;
-      type: string;
-      path: string;
-    };
-  }) => void;
-  accentColor?: string;
-}) => {
+}: WidgetProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const inputRef: { current: any } = useRef(null);
   const [file, setFile] = useState<any>(null);
@@ -38,7 +27,10 @@ const UfWidget = ({
   const handleUpload = async () => {
     const formData = new FormData();
     formData.append("file", file);
-
+    filename && formData.append("filename", filename);
+    maxFileSize && formData.append("maxFileSize", maxFileSize);
+    allowedFileTypes &&
+      formData.append("allowedFileTypes", allowedFileTypes.join(","));
     try {
       setUploading(true);
       const { data } = await axios.post(
@@ -54,6 +46,7 @@ const UfWidget = ({
       onUploadComplete && onUploadComplete(data);
     } catch (error) {
       setDidUploadFail(true);
+      console.log(error);
     } finally {
       setUploading(false);
     }
