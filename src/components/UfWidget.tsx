@@ -188,7 +188,7 @@ const UfWidget = ({
                 <p className="uf_attribution">
                   Powered with ♥ by{" "}
                   <a
-                    href="https://uploadfly.cloud?utm_source=react_widget"
+                    href="https://uploadfly.co?utm_source=react_widget"
                     target="_blank"
                   >
                     Uploadfly
